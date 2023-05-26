@@ -1,0 +1,43 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class elevator : MonoBehaviour
+{
+    //declare your variable
+    public Vector3 positionChange;
+    public GameObject box;
+    private bool canMove = false;
+
+    void Start()
+    {
+        //assign your Vector3(x, y, z) variable
+        positionChange = new Vector3(0, 1, 0); //move the playform UP
+    }
+
+    void Update()
+    {
+        if (canMove)
+        {
+            box.transform.position += (positionChange * Time.deltaTime);
+            Debug.Log("Y-Position: " + transform.position.y);
+
+            //Use the conditional to either increment or decrement the y-value
+            if (box.transform.position.y > 2)
+            {
+                positionChange = new Vector3(0, -2, 0); //move the platform DOWN
+            }
+            else if (box.transform.position.y < 0)
+            {
+                positionChange = new Vector3(0, 1, 0); //move the platform UP
+            }
+
+        }
+    }
+    private void OnTriggerEnter(Collider other)
+    {
+        canMove = true;
+        Debug.Log("triggered");
+        Debug.Log(canMove);
+    }
+}
